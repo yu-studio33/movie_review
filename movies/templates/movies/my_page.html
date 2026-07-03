@@ -1,0 +1,27 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}マイページ{% endblock %}
+
+{% block content %}
+    <h2>マイページ</h2>
+
+    <h3>プロフィール編集</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">更新する</button>
+    </form>
+
+    <h3>投稿したレビュー</h3>
+    <ul class="review-list">
+        {% for review in reviews %}
+            <li>
+                <a href="{% url 'movie_detail' review.movie.id %}">{{ review.movie.title }}</a>
+                （評価: {{ review.rating }}）<br>
+                {{ review.comment }}
+            </li>
+        {% empty %}
+            <li>まだレビューを投稿していません。</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

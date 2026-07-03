@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}映画レビューサイト{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'movies/css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1><a href="{% url 'movie_list' %}">MOVIE REVIEW</a></h1>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'my_page' %}" class="username">{{ user.username }}さん</a>
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">ログアウト</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">ログイン</a>
+            <a href="{% url 'signup' %}">新規登録</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+    <footer>
+        <p>&copy; 2026 Movie Review Site</p>
+    </footer>
+</body>
+</html>

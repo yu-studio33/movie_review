@@ -1,0 +1,53 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'movie_list' %}">← 一覧に戻る</a>
+
+<h2>{{ movie.title }}</h2>
+<p>公開年: {{ movie.release_year }} / ジャンル: {{ movie.genre }}</p>
+<p>{{ movie.description }}</p>
+
+<div class="rating-display">
+    {% if avg_rating %}
+    ★ 平均評価: {{ avg_rating|floatformat:1 }}（{{ reviews.count }}件のレビュー）
+    {% else %}
+    まだレビューがありません
+    {% endif %}
+</div>
+
+<h3>レビュー</h3>
+<ul class="review-list">
+    {% for review in reviews %}
+    <li>
+        <strong>{{ review.user.username }}</strong>（評価: {{ review.rating }}）<br>
+        {{ review.comment }}
+    </li>
+    {% empty %}
+    <li>まだレビューがありません。</li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<h3>レビューを投稿する</h3>
+<form method="post">
+    {% csrf_token %}
+
+    <label>評価</label>
+    <div class="star-rating">
+        {% for radio in form.rating %}
+        {{ radio.tag }}
+        <label for="{{ radio.id_for_label }}">★</label>
+        {% endfor %}
+    </div>
+
+    {{ form.comment.label_tag }}
+    {{ form.comment }}
+
+    <button type="submit">投稿する</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">ログイン</a>するとレビューを投稿できます。</p>
+{% endif %}
+{% endblock %}

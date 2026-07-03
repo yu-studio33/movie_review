@@ -1,0 +1,381 @@
+/* ベース設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+}
+
+/* ヘッダー */
+header {
+    background-color: #000000;
+    padding: 28px 40px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+header h1 a {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+header h1 a:hover {
+    color: #FF7FD4;
+}
+
+/* メインコンテンツ */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 56px 24px;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+}
+
+h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #FF7FD4;
+    margin: 40px 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* 詳細ページ内のリンク */
+main a {
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+main a:hover {
+    color: #FF7FD4;
+}
+
+/* 映画一覧 */
+.movie-list {
+    list-style: none;
+}
+
+.movie-list li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    transition: color 0.25s ease;
+}
+
+.movie-list li {
+    background-color: #141414;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 12px;
+    color: #999;
+    transition: border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.movie-list li:hover {
+    border-color: #FF7FD4;
+    transform: translateX(4px);
+    color: #FF7FD4;
+}
+
+.movie-list li:hover a {
+    color: #FF7FD4;
+}
+
+/* レビュー */
+.review-list {
+    list-style: none;
+}
+
+.review-list li {
+    background-color: #141414;
+    border-left: 3px solid #FF7FD4;
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+    cursor: default;
+}
+
+.review-list li strong {
+    color: #FF7FD4;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 36px;
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-top: 1px solid #1a1a1a;
+}
+
+/* フォーム共通スタイル */
+form p {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    max-width: 500px;
+    background-color: #141414;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 12px 16px;
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: #FF7FD4;
+}
+
+form ul.errorlist {
+    list-style: none;
+    color: #ff5c8a;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+form .helptext,
+form ul {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.5;
+    list-style: none;
+}
+
+button, form button {
+    display: block;
+    background-color: #FF7FD4;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 28px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 8px;
+}
+
+button:hover, form button:hover {
+    background-color: #ff5cc4;
+}
+
+/* ヘッダーのnav（ログイン導線） */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    color: #FF7FD4;
+}
+
+nav a.username {
+    color: #FF7FD4;
+    font-weight: 600;
+}
+
+nav form button {
+    margin-top: 0;
+    padding: 8px 16px;
+    font-size: 11px;
+    background-color: transparent;
+    border: 1px solid #333;
+    color: #ccc;
+}
+
+nav form button:hover {
+    background-color: #FF7FD4;
+    border-color: #FF7FD4;
+    color: #000;
+}
+
+/* 星評価 */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+    margin: 8px 0 24px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 32px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #FF7FD4;
+}
+
+/* マイページ */
+main > p {
+    margin-bottom: 20px;
+}
+
+.review-list li a {
+    color: #FF7FD4;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.review-list li a:hover {
+    color: #ff5cc4;
+}
+
+/* 成功メッセージ */
+.messages {
+    list-style: none;
+    margin-bottom: 24px;
+}
+
+.messages li.success {
+    background-color: #1a1a1a;
+    border-left: 3px solid #FF7FD4;
+    color: #FF7FD4;
+    padding: 14px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* ログイン・新規登録ページのリンク */
+form + p {
+    margin-top: 20px;
+}
+
+/* 平均評価表示 */
+.rating-display {
+    color: #FF7FD4;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* 検索フォーム */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.search-form select,
+.search-form input,
+.search-form button {
+    height: 48px;
+    box-sizing: border-box;
+}
+
+.search-form select,
+.search-form input {
+    background-color: #141414;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 0 14px;
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    width: 160px;
+}
+
+.search-form select:focus,
+.search-form input:focus {
+    outline: none;
+    border-color: #FF7FD4;
+}
+
+.search-form button {
+    margin-top: 0;
+    padding: 0 28px;
+}
+
+.reset-link {
+    color: #999;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.reset-link:hover {
+    color: #FF7FD4;
+}
