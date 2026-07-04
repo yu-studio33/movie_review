@@ -379,3 +379,35 @@ form + p {
 .reset-link:hover {
     color: #FF7FD4;
 }
+
+/* ページネーション */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.pagination a {
+    color: #FF7FD4;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.pagination a:hover {
+    border-color: #FF7FD4;
+    background-color: #1a1a1a;
+}
+
+.pagination span {
+    color: #999;
+    font-size: 13px;
+}

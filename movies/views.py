@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import Movie, Review
 from .forms import ReviewForm, ProfileEditForm
 from django.db.models import Avg
+from django.core.paginator import Paginator
 
 
 class SignUpForm(UserCreationForm):
@@ -36,8 +37,12 @@ def movie_list(request):
     genres = Movie.objects.values_list('genre', flat=True).distinct()
     decades = [1980, 1990, 2000, 2010, 2020]
 
+    paginator = Paginator(movies, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'movies/movie_list.html', {
-        'movies': movies,
+        'page_obj': page_obj,
         'genres': genres,
         'decades': decades,
         'selected_genre': genre,
@@ -47,7 +52,7 @@ def movie_list(request):
 
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
-    reviews = movie.reviews.all()
+    reviews = movie.reviews.all().order_by('-created_at')
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
 
     if request.method == 'POST':
