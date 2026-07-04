@@ -77,9 +77,16 @@ main a:hover {
     list-style: none;
 }
 
-.movie-list li a {
-    color: #ffffff;
+.movie-card-link {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
     text-decoration: none;
+    width: 100%;
+}
+
+.movie-title {
+    color: #ffffff;
     font-size: 17px;
     font-weight: 500;
     transition: color 0.25s ease;
@@ -95,16 +102,26 @@ main a:hover {
     transition: border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
 }
 
+.movie-poster {
+    width: 80px;
+    height: auto;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.movie-info {
+    flex: 1;
+}
+
 .movie-list li:hover {
     border-color: #FF7FD4;
     transform: translateX(4px);
     color: #FF7FD4;
 }
 
-.movie-list li:hover a {
+.movie-list li:hover .movie-title {
     color: #FF7FD4;
 }
-
 /* レビュー */
 .review-list {
     list-style: none;
@@ -410,4 +427,49 @@ form + p {
 .pagination span {
     color: #999;
     font-size: 13px;
+}
+
+/* TMDB検索結果 */
+.tmdb-results {
+    list-style: none;
+}
+
+.tmdb-results li {
+    background-color: #141414;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 20px;
+}
+
+.tmdb-poster {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.tmdb-info h3 {
+    color: #FF7FD4;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    margin: 0 0 8px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.tmdb-info p {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* 詳細ページのポスター */
+.detail-poster {
+    width: 200px;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 24px;
 }

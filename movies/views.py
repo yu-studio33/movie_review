@@ -7,6 +7,7 @@ from .models import Movie, Review
 from .forms import ReviewForm, ProfileEditForm
 from django.db.models import Avg
 from django.core.paginator import Paginator
+from .tmdb import search_movies
 
 
 class SignUpForm(UserCreationForm):
@@ -100,3 +101,63 @@ def my_page(request):
         form = ProfileEditForm(instance=request.user)
 
     return render(request, 'movies/my_page.html', {'reviews': reviews, 'form': form})
+
+
+@login_required
+def my_page(request):
+    reviews = Review.objects.filter(user=request.user).order_by('-created_at')
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'プロフィールを変更しました')
+            return redirect('my_page')
+    else:
+        form = ProfileEditForm(instance=request.user)
+
+    return render(request, 'movies/my_page.html', {'reviews': reviews, 'form': form})
+
+
+@login_required
+def tmdb_search(request):
+    if not request.user.is_staff:
+        return redirect('movie_list')
+
+    query = request.GET.get('query', '')
+    results = []
+
+    if query:
+        results = search_movies(query)
+
+    return render(request, 'movies/tmdb_search.html', {'query': query, 'results': results})
+
+
+@login_required
+def tmdb_import(request):
+    if not request.user.is_staff:
+        return redirect('movie_list')
+
+    if request.method == 'POST':
+        tmdb_id = request.POST.get('tmdb_id')
+        title = request.POST.get('title')
+        overview = request.POST.get('overview')
+        release_date = request.POST.get('release_date')
+        poster_url = request.POST.get('poster_url')
+
+        release_year = release_date[:4] if release_date else None
+
+        if not Movie.objects.filter(tmdb_id=tmdb_id).exists():
+            Movie.objects.create(
+                title=title,
+                description=overview,
+                release_year=release_year,
+                genre='未設定',
+                poster_url=poster_url,
+                tmdb_id=tmdb_id,
+            )
+            messages.success(request, f'「{title}」を登録しました')
+        else:
+            messages.success(request, f'「{title}」は既に登録されています')
+
+    return redirect('tmdb_search')

@@ -1,0 +1,40 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}TMDB検索{% endblock %}
+
+{% block content %}
+    <h2>TMDBで映画を検索</h2>
+
+    <form method="get" class="search-form">
+        <input type="text" name="query" placeholder="映画タイトルを入力" value="{{ query }}">
+        <button type="submit">検索</button>
+    </form>
+
+    <ul class="tmdb-results">
+        {% for movie in results %}
+            <li>
+                {% if movie.poster_url %}
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="tmdb-poster">
+                {% endif %}
+                <div class="tmdb-info">
+                    <h3>{{ movie.title }}</h3>
+                    <p>{{ movie.release_date }}</p>
+                    <p>{{ movie.overview|truncatechars:100 }}</p>
+                    <form method="post" action="{% url 'tmdb_import' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="tmdb_id" value="{{ movie.tmdb_id }}">
+                        <input type="hidden" name="title" value="{{ movie.title }}">
+                        <input type="hidden" name="overview" value="{{ movie.overview }}">
+                        <input type="hidden" name="release_date" value="{{ movie.release_date }}">
+                        <input type="hidden" name="poster_url" value="{{ movie.poster_url }}">
+                        <button type="submit">この映画を登録する</button>
+                    </form>
+                </div>
+            </li>
+        {% empty %}
+            {% if query %}
+                <li>検索結果が見つかりませんでした。</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

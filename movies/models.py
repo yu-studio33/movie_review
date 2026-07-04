@@ -8,6 +8,8 @@ class Movie(models.Model):
     release_year = models.IntegerField()
     genre = models.CharField(max_length=100)
     poster = models.ImageField(upload_to='posters/', blank=True, null=True)
+    poster_url = models.URLField(blank=True, verbose_name="ポスター画像URL")
+    tmdb_id = models.IntegerField(blank=True, null=True, unique=True, verbose_name="TMDB映画ID")
 
     def __str__(self):
         return self.title
