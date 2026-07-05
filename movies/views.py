@@ -23,18 +23,37 @@ class SignUpForm(UserCreationForm):
 
 def movie_list(request):
     query = request.GET.get('query', '')
+    page = int(request.GET.get('page', 1))
 
     if query:
-        movies = search_movies(query)
+        movies, total_pages = search_movies(query, page=page)
         heading = f'「{query}」の検索結果'
     else:
-        movies = get_popular_movies()
+        movies, total_pages = get_popular_movies(page=page)
         heading = '人気の映画'
+
+    tmdb_ids = [m['tmdb_id'] for m in movies]
+    local_movies = Movie.objects.filter(tmdb_id__in=tmdb_ids).annotate(
+        avg_rating=Avg('reviews__rating')
+    )
+    rating_map = {m.tmdb_id: m.avg_rating for m in local_movies}
+    for m in movies:
+        m['avg_rating'] = rating_map.get(m['tmdb_id'])
+
+    has_next = page < total_pages
+
+    # 「もっと見る」クリック時(Ajax)は一覧部分だけ返す
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'movies/movie_list_items.html', {
+            'movies': movies,
+        })
 
     return render(request, 'movies/movie_list.html', {
         'movies': movies,
         'heading': heading,
         'query': query,
+        'page': page,
+        'has_next': has_next,
     })
 
 

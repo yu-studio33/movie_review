@@ -27,8 +27,7 @@ def get_genre_map():
     return _genre_map
 
 
-def search_movies(query):
-    """TMDBで映画を検索し、結果のリストを返す"""
+def search_movies(query, page=1):
     genre_map = get_genre_map()
 
     url = f'{TMDB_BASE_URL}/search/movie'
@@ -36,6 +35,7 @@ def search_movies(query):
         'api_key': TMDB_API_KEY,
         'query': query,
         'language': 'ja-JP',
+        'page': page,
     }
     response = requests.get(url, params=params)
     response.raise_for_status()
@@ -56,11 +56,10 @@ def search_movies(query):
             'poster_url': f"{TMDB_IMAGE_BASE_URL}{movie.get('poster_path')}" if movie.get('poster_path') else '',
             'genre': ' / '.join(genre_names) if genre_names else '未設定',
         })
-    return results
+    return results, data.get('total_pages', 1)
 
 
 def get_popular_movies(page=1):
-    """TMDBの人気映画一覧を取得する"""
     genre_map = get_genre_map()
 
     url = f'{TMDB_BASE_URL}/movie/popular'
@@ -88,7 +87,7 @@ def get_popular_movies(page=1):
             'poster_url': f"{TMDB_IMAGE_BASE_URL}{movie.get('poster_path')}" if movie.get('poster_path') else '',
             'genre': ' / '.join(genre_names) if genre_names else '未設定',
         })
-    return results
+    return results, data.get('total_pages', 1)
 
 
 def get_movie_details(tmdb_id):
