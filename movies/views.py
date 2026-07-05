@@ -6,8 +6,7 @@ from django.contrib import messages
 from .models import Movie, Review
 from .forms import ReviewForm, ProfileEditForm
 from django.db.models import Avg
-from django.core.paginator import Paginator
-from .tmdb import search_movies
+from .tmdb import search_movies, get_popular_movies, get_movie_details
 
 
 class SignUpForm(UserCreationForm):
@@ -23,36 +22,38 @@ class SignUpForm(UserCreationForm):
 
 
 def movie_list(request):
-    movies = Movie.objects.annotate(avg_rating=Avg('reviews__rating'))
+    query = request.GET.get('query', '')
 
-    genre = request.GET.get('genre')
-    decade = request.GET.get('decade')
-
-    if genre:
-        movies = movies.filter(genre__icontains=genre)
-    if decade:
-        decade_start = int(decade)
-        decade_end = decade_start + 9
-        movies = movies.filter(release_year__gte=decade_start, release_year__lte=decade_end)
-
-    genres = Movie.objects.values_list('genre', flat=True).distinct()
-    decades = [1980, 1990, 2000, 2010, 2020]
-
-    paginator = Paginator(movies, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    if query:
+        movies = search_movies(query)
+        heading = f'「{query}」の検索結果'
+    else:
+        movies = get_popular_movies()
+        heading = '人気の映画'
 
     return render(request, 'movies/movie_list.html', {
-        'page_obj': page_obj,
-        'genres': genres,
-        'decades': decades,
-        'selected_genre': genre,
-        'selected_decade': decade,
+        'movies': movies,
+        'heading': heading,
+        'query': query,
     })
 
 
-def movie_detail(request, movie_id):
-    movie = get_object_or_404(Movie, id=movie_id)
+def movie_detail(request, tmdb_id):
+    movie, created = Movie.objects.get_or_create(
+        tmdb_id=tmdb_id,
+        defaults={'title': '', 'description': '', 'release_year': 2000, 'genre': '未設定'}
+    )
+
+    if created:
+        details = get_movie_details(tmdb_id)
+        if details:
+            movie.title = details['title']
+            movie.description = details['overview']
+            movie.release_year = details['release_date'][:4] if details['release_date'] else 2000
+            movie.genre = details['genre']
+            movie.poster_url = details['poster_url']
+            movie.save()
+
     reviews = movie.reviews.all().order_by('-created_at')
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
 
@@ -63,7 +64,7 @@ def movie_detail(request, movie_id):
             review.movie = movie
             review.user = request.user
             review.save()
-            return redirect('movie_detail', movie_id=movie.id)
+            return redirect('movie_detail', tmdb_id=movie.tmdb_id)
     else:
         form = ReviewForm()
 
@@ -101,63 +102,3 @@ def my_page(request):
         form = ProfileEditForm(instance=request.user)
 
     return render(request, 'movies/my_page.html', {'reviews': reviews, 'form': form})
-
-
-@login_required
-def my_page(request):
-    reviews = Review.objects.filter(user=request.user).order_by('-created_at')
-
-    if request.method == 'POST':
-        form = ProfileEditForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'プロフィールを変更しました')
-            return redirect('my_page')
-    else:
-        form = ProfileEditForm(instance=request.user)
-
-    return render(request, 'movies/my_page.html', {'reviews': reviews, 'form': form})
-
-
-@login_required
-def tmdb_search(request):
-    if not request.user.is_staff:
-        return redirect('movie_list')
-
-    query = request.GET.get('query', '')
-    results = []
-
-    if query:
-        results = search_movies(query)
-
-    return render(request, 'movies/tmdb_search.html', {'query': query, 'results': results})
-
-
-@login_required
-def tmdb_import(request):
-    if not request.user.is_staff:
-        return redirect('movie_list')
-
-    if request.method == 'POST':
-        tmdb_id = request.POST.get('tmdb_id')
-        title = request.POST.get('title')
-        overview = request.POST.get('overview')
-        release_date = request.POST.get('release_date')
-        poster_url = request.POST.get('poster_url')
-
-        release_year = release_date[:4] if release_date else None
-
-        if not Movie.objects.filter(tmdb_id=tmdb_id).exists():
-            Movie.objects.create(
-                title=title,
-                description=overview,
-                release_year=release_year,
-                genre='未設定',
-                poster_url=poster_url,
-                tmdb_id=tmdb_id,
-            )
-            messages.success(request, f'「{title}」を登録しました')
-        else:
-            messages.success(request, f'「{title}」は既に登録されています')
-
-    return redirect('tmdb_search')

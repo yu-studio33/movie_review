@@ -1,65 +1,33 @@
 {% extends 'movies/base.html' %}
 
-{% block title %}映画一覧{% endblock %}
+{% block title %}{{ heading }}{% endblock %}
 
 {% block content %}
-    <h2>映画一覧</h2>
-
     <form method="get" class="search-form">
-        <select name="genre">
-            <option value="">すべてのジャンル</option>
-            {% for g in genres %}
-                <option value="{{ g }}" {% if g == selected_genre %}selected{% endif %}>{{ g }}</option>
-            {% endfor %}
-        </select>
-
-        <select name="decade">
-            <option value="">すべての年代</option>
-            {% for d in decades %}
-                <option value="{{ d }}" {% if d|stringformat:"s" == selected_decade %}selected{% endif %}>{{ d }}年代</option>
-            {% endfor %}
-        </select>
-
+        <input type="text" name="query" placeholder="映画タイトルを検索" value="{{ query }}">
         <button type="submit">検索</button>
-        <a href="{% url 'movie_list' %}" class="reset-link">リセット</a>
+        {% if query %}
+            <a href="{% url 'movie_list' %}" class="reset-link">人気映画に戻る</a>
+        {% endif %}
     </form>
 
+    <h2>{{ heading }}</h2>
+
     <ul class="movie-list">
-        {% for movie in page_obj %}
+        {% for movie in movies %}
             <li>
-                <a href="{% url 'movie_detail' movie.id %}" class="movie-card-link">
+                <a href="{% url 'movie_detail' movie.tmdb_id %}" class="movie-card-link">
                     {% if movie.poster_url %}
                         <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="movie-poster">
                     {% endif %}
                     <div class="movie-info">
                         <span class="movie-title">{{ movie.title }}</span>
-                        （{{ movie.release_year }}年 / {{ movie.genre }}）
-                        <div class="rating-display">
-                            {% if movie.avg_rating %}
-                                ★ {{ movie.avg_rating|floatformat:1 }}
-                            {% else %}
-                                まだ評価がありません
-                            {% endif %}
-                        </div>
+                        （{{ movie.release_date|slice:":4" }}年 / {{ movie.genre }}）
                     </div>
                 </a>
             </li>
         {% empty %}
-            <li>条件に合う映画が見つかりませんでした。</li>
+            <li>検索結果が見つかりませんでした。</li>
         {% endfor %}
     </ul>
-
-    {% if page_obj.has_other_pages %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">← 前へ</a>
-            {% endif %}
-
-            <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">次へ →</a>
-            {% endif %}
-        </div>
-    {% endif %}
 {% endblock %}
