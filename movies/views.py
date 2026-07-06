@@ -73,7 +73,15 @@ def movie_detail(request, tmdb_id):
             movie.poster_url = details['poster_url']
             movie.save()
 
-    reviews = movie.reviews.all().order_by('-created_at')
+    sort = request.GET.get('sort', 'new')
+    if sort == 'high':
+        reviews = movie.reviews.all().order_by('-rating', '-created_at')
+    elif sort == 'low':
+        reviews = movie.reviews.all().order_by('rating', '-created_at')
+    else:
+        sort = 'new'  # 不正な値が来た場合もデフォルトに寄せる
+        reviews = movie.reviews.all().order_by('-created_at')
+
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
 
     if request.method == 'POST':
@@ -92,6 +100,7 @@ def movie_detail(request, tmdb_id):
         'reviews': reviews,
         'form': form,
         'avg_rating': avg_rating,
+        'sort': sort,
     })
 
 

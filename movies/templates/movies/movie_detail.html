@@ -23,6 +23,13 @@
     </div>
 
     <h3>レビュー</h3>
+
+    <div class="review-sort-tabs">
+        <a href="?sort=new" class="{% if sort == 'new' %}active{% endif %}">新着順</a>
+        <a href="?sort=high" class="{% if sort == 'high' %}active{% endif %}">評価が高い順</a>
+        <a href="?sort=low" class="{% if sort == 'low' %}active{% endif %}">評価が低い順</a>
+    </div>
+
     <ul class="review-list">
         {% for review in reviews %}
             <li>
@@ -33,6 +40,7 @@
             <li>まだレビューがありません</li>
         {% endfor %}
     </ul>
+
 
     {% if user.is_authenticated %}
         <h3>レビューを投稿する</h3>

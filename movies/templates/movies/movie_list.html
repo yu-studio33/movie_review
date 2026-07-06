@@ -1,29 +1,35 @@
 {% extends 'movies/base.html' %}
 
 {% block title %}{{ heading }}{% endblock %}
+{% block main_class %}main-wide{% endblock %}
 
 {% block content %}
-    <form method="get" class="search-form">
-        <input type="text" name="query" placeholder="映画タイトルを検索" value="{{ query }}">
-        <button type="submit">検索</button>
-        {% if query %}
-            <a href="{% url 'movie_list' %}" class="reset-link">人気映画に戻る</a>
-        {% endif %}
-    </form>
-
-    <h2>{{ heading }}</h2>
-
-    <ul class="movie-list" id="movie-list">
-        {% include 'movies/movie_list_items.html' %}
-    </ul>
-
-    {% if has_next %}
-        <div class="load-more-wrap">
-            <button id="load-more-btn" data-next-page="{{ page|add:'1' }}" data-query="{{ query }}">
-                もっと見る
-            </button>
+    <div class="wide-content">
+        <div class="hero-section">
+            <h1 class="hero-catch">何百万本もの映画から、次の一本を見つけよう。</h1>
+            <form method="get" class="search-form">
+                <input type="text" name="query" placeholder="映画タイトルを検索" value="{{ query }}">
+                <button type="submit">検索</button>
+                {% if query %}
+                    <a href="{% url 'movie_list' %}" class="reset-link">人気映画に戻る</a>
+                {% endif %}
+            </form>
         </div>
-    {% endif %}
+
+        <h2>{{ heading }}</h2>
+
+        <div class="movie-grid" id="movie-list">
+            {% include 'movies/movie_list_items.html' %}
+        </div>
+
+        {% if has_next %}
+            <div class="load-more-wrap">
+                <button id="load-more-btn" data-next-page="{{ page|add:'1' }}" data-query="{{ query }}">
+                    もっと見る
+                </button>
+            </div>
+        {% endif %}
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
