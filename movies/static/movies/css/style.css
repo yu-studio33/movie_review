@@ -335,37 +335,30 @@ main.main-wide {
 
 /* レビューの並び順切り替え */
 .review-sort-tabs {
-    display: flex;
-    gap: 10px;
+    display: inline-flex;
+    gap: 4px;
     margin-bottom: 16px;
+    padding: 0.2px;
+    border: 1px solid #444;
+    border-radius: 999px;
 }
 
 .review-sort-tabs a {
     color: #ccc;
     text-decoration: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: 1px solid #444;
-    transition: all 0.2s ease;
+    padding: 7px 18px;
+    border-radius: 999px;
     display: inline-block;
 }
 
 .review-sort-tabs a:hover {
-    border-color: #FF7FD4;
     color: #FF7FD4;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(255, 127, 212, 0.25);
-}
-
-.review-sort-tabs a:active {
-    transform: translateY(0px);
-    box-shadow: none;
 }
 
 .review-sort-tabs a.active {
-    color: #FF7FD4;
-    border-color: #FF7FD4;
-    background-color: rgba(255, 127, 212, 0.08);
+    color: #0d0d0d;
+    background-color: #FF7FD4;
+    font-weight: bold;
 }
 
 /* ==========================================================================

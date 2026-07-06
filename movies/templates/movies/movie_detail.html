@@ -24,23 +24,9 @@
 
     <h3>レビュー</h3>
 
-    <div class="review-sort-tabs">
-        <a href="?sort=new" class="{% if sort == 'new' %}active{% endif %}">新着順</a>
-        <a href="?sort=high" class="{% if sort == 'high' %}active{% endif %}">評価が高い順</a>
-        <a href="?sort=low" class="{% if sort == 'low' %}active{% endif %}">評価が低い順</a>
+    <div id="review-section">
+        {% include 'movies/movie_review_items.html' %}
     </div>
-
-    <ul class="review-list">
-        {% for review in reviews %}
-            <li>
-                <strong>{{ review.user.username }}</strong>（評価: {{ review.rating }}）<br>
-                {{ review.comment|linebreaksbr }}
-            </li>
-        {% empty %}
-            <li>まだレビューがありません</li>
-        {% endfor %}
-    </ul>
-
 
     {% if user.is_authenticated %}
         <h3>レビューを投稿する</h3>
@@ -63,4 +49,31 @@
     {% else %}
         <p><a href="{% url 'login' %}">ログイン</a>するとレビューを投稿できます。</p>
     {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const section = document.getElementById('review-section');
+
+            section.addEventListener('click', function (e) {
+                const link = e.target.closest('a[data-sort]');
+                if (!link) return;
+
+                e.preventDefault();  // 通常のページ遷移をキャンセル
+
+                const sort = link.dataset.sort;
+                const url = new URL(window.location.href);
+                url.searchParams.set('sort', sort);
+
+                fetch(url, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        section.innerHTML = html;
+                        // URLも更新しておく(ブラウザバックやリロード時のため)
+                        window.history.pushState({}, '', url);
+                    });
+            });
+        });
+    </script>
 {% endblock %}

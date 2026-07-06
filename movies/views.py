@@ -79,10 +79,17 @@ def movie_detail(request, tmdb_id):
     elif sort == 'low':
         reviews = movie.reviews.all().order_by('rating', '-created_at')
     else:
-        sort = 'new'  # 不正な値が来た場合もデフォルトに寄せる
+        sort = 'new'
         reviews = movie.reviews.all().order_by('-created_at')
 
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+
+    # 並び替えのAjaxリクエスト時は、レビュー部分だけ返す
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'movies/movie_review_items.html', {
+            'reviews': reviews,
+            'sort': sort,
+        })
 
     if request.method == 'POST':
         form = ReviewForm(request.POST)

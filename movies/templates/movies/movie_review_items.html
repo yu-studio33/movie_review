@@ -1,0 +1,16 @@
+<div class="review-sort-tabs">
+    <a href="?sort=new" data-sort="new" class="{% if sort == 'new' %}active{% endif %}">新着順</a>
+    <a href="?sort=high" data-sort="high" class="{% if sort == 'high' %}active{% endif %}">評価が高い順</a>
+    <a href="?sort=low" data-sort="low" class="{% if sort == 'low' %}active{% endif %}">評価が低い順</a>
+</div>
+
+<ul class="review-list">
+    {% for review in reviews %}
+        <li>
+            <strong>{{ review.user.username }}</strong>（評価: {{ review.rating }}）<br>
+            {{ review.comment|linebreaksbr }}
+        </li>
+    {% empty %}
+        <li>まだレビューがありません</li>
+    {% endfor %}
+</ul>
