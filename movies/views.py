@@ -7,6 +7,8 @@ from .models import Movie, Review
 from .forms import ReviewForm, ProfileEditForm
 from django.db.models import Avg
 from .tmdb import search_movies, get_popular_movies, get_movie_details
+from .sentiment import predict_sentiment
+from django.db.models import Count
 
 
 class SignUpForm(UserCreationForm):
@@ -16,7 +18,8 @@ class SignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].help_text = '半角英数字で入力してください（150文字以内）'
+        self.fields['username'].max_length = 20
+        self.fields['username'].help_text = '半角英数字で入力してください（20文字以内）'
         self.fields['password1'].help_text = '8文字以上のパスワードを入力してください'
         self.fields['password2'].help_text = '確認のため、同じパスワードを入力してください'
 
@@ -97,6 +100,7 @@ def movie_detail(request, tmdb_id):
             review = form.save(commit=False)
             review.movie = movie
             review.user = request.user
+            review.sentiment = predict_sentiment(review.comment)
             review.save()
             return redirect('movie_detail', tmdb_id=movie.tmdb_id)
     else:
@@ -127,6 +131,32 @@ def signup(request):
 def my_page(request):
     reviews = Review.objects.filter(user=request.user).order_by('-created_at')
 
+    # --- 協調フィルタリングによるおすすめ ---
+    # ① 自分がpositive評価した映画
+    my_positive_movie_ids = Review.objects.filter(
+        user=request.user, sentiment='positive'
+    ).values_list('movie_id', flat=True)
+
+    # ② それらの映画をpositive評価している他のユーザー
+    similar_user_ids = Review.objects.filter(
+        movie_id__in=my_positive_movie_ids, sentiment='positive'
+    ).exclude(user=request.user).values_list('user_id', flat=True).distinct()
+
+    # ③ 自分が既にレビュー済みの映画(除外対象)
+    my_reviewed_movie_ids = Review.objects.filter(
+        user=request.user
+    ).values_list('movie_id', flat=True)
+
+    # ④ 似た好みのユーザーがpositive評価している、自分が未レビューの映画を集計
+    recommended_movies = Movie.objects.filter(
+        reviews__user_id__in=similar_user_ids,
+        reviews__sentiment='positive'
+    ).exclude(
+        id__in=my_reviewed_movie_ids
+    ).annotate(
+        recommend_score=Count('id')
+    ).order_by('-recommend_score')[:10]
+
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -136,4 +166,8 @@ def my_page(request):
     else:
         form = ProfileEditForm(instance=request.user)
 
-    return render(request, 'movies/my_page.html', {'reviews': reviews, 'form': form})
+    return render(request, 'movies/my_page.html', {
+        'reviews': reviews,
+        'form': form,
+        'recommended_movies': recommended_movies,
+    })

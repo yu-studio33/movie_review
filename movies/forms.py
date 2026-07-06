@@ -29,3 +29,8 @@ class ProfileEditForm(forms.ModelForm):
             'username': 'ユーザー名',
             'email': 'メールアドレス',
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].max_length = 20
+        self.fields['username'].help_text = '半角英数字で入力してください（20文字以内）'

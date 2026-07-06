@@ -1,6 +1,7 @@
 {% extends 'movies/base.html' %}
 
 {% block title %}マイページ{% endblock %}
+{% block main_class %}main-wide{% endblock %}
 
 {% block content %}
     <h2>マイページ</h2>
@@ -12,11 +13,27 @@
         <button type="submit">更新する</button>
     </form>
 
+    <h3>あなたへのおすすめ</h3>
+    {% if recommended_movies %}
+        <div class="movie-grid">
+            {% for movie in recommended_movies %}
+                <a href="{% url 'movie_detail' movie.tmdb_id %}" class="movie-card">
+                    {% if movie.poster_url %}
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="movie-poster">
+                    {% endif %}
+                    <p class="movie-title">{{ movie.title }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>まだおすすめが見つかりません。他の映画にもレビューを投稿してみましょう。</p>
+    {% endif %}
+
     <h3>投稿したレビュー</h3>
     <ul class="review-list">
         {% for review in reviews %}
             <li>
-                <a href="{% url 'movie_detail' review.movie.id %}">{{ review.movie.title }}</a>
+                <a href="{% url 'movie_detail' review.movie.tmdb_id %}">{{ review.movie.title }}</a>
                 （評価: {{ review.rating }}）<br>
                 {{ review.comment }}
             </li>
