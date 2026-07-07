@@ -16,19 +16,35 @@
             </form>
         </div>
 
-        <h2>{{ heading }}</h2>
+{% if user.is_authenticated and recommended_movies %}
+    <h2>あなたへのおすすめ</h2>
+    <div class="movie-grid">
+        {% for movie in recommended_movies %}
+            <a href="{% url 'movie_detail' movie.tmdb_id %}" class="movie-card">
+                {% if movie.poster_url %}
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="movie-poster">
+                {% endif %}
+                <p class="movie-title">{{ movie.title }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}
+        
+        <div class="browse-section">
+            <h2>{{ heading }}</h2>
 
-        <div class="movie-grid" id="movie-list">
-            {% include 'movies/movie_list_items.html' %}
-        </div>
-
-        {% if has_next %}
-            <div class="load-more-wrap">
-                <button id="load-more-btn" data-next-page="{{ page|add:'1' }}" data-query="{{ query }}">
-                    もっと見る
-                </button>
+            <div class="movie-grid" id="movie-list">
+                {% include 'movies/movie_list_items.html' %}
             </div>
-        {% endif %}
+
+            {% if has_next %}
+                <div class="load-more-wrap">
+                    <button id="load-more-btn" data-next-page="{{ page|add:'1' }}" data-query="{{ query }}">
+                        もっと見る
+                    </button>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <script>

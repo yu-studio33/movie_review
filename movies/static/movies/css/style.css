@@ -490,3 +490,55 @@ button:hover, form button:hover {
     border-radius: 4px;
     font-size: 14px;
 }
+
+/* ==========================================================================
+   おすすめカルーセル
+   ========================================================================== */
+.movie-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #FF7FD4 #1a1a1a;
+}
+
+.movie-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.movie-carousel::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+.movie-carousel::-webkit-scrollbar-thumb {
+    background: #FF7FD4;
+    border-radius: 4px;
+}
+
+.carousel-card {
+    flex: 0 0 auto;
+    width: 190px;
+    position: relative;
+}
+
+.match-badge {
+    display: inline-block;
+    background-color: rgba(255, 127, 212, 0.15);
+    color: #FF7FD4;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   セクションの区切り(カルーセル群 → グリッド一覧の切り替え)
+   ========================================================================== */
+.browse-section {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid #333;
+}
