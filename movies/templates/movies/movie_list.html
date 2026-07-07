@@ -29,8 +29,24 @@
         {% endfor %}
     </div>
 {% endif %}
-        
-        <div class="browse-section">
+
+{% if now_playing_movies %}
+    <div class="section-divider">
+        <h2>新着映画</h2>
+        <div class="movie-grid">
+            {% for movie in now_playing_movies %}
+                <a href="{% url 'movie_detail' movie.tmdb_id %}" class="movie-card">
+                    {% if movie.poster_url %}
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="movie-poster">
+                    {% endif %}
+                    <p class="movie-title">{{ movie.title }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+        <div class="section-divider">
             <h2>{{ heading }}</h2>
 
             <div class="movie-grid" id="movie-list">

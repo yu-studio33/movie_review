@@ -115,3 +115,35 @@ def get_movie_details(tmdb_id):
         'poster_url': f"{TMDB_IMAGE_BASE_URL}{movie.get('poster_path')}" if movie.get('poster_path') else '',
         'genre': ' / '.join(genre_names) if genre_names else '未設定',
     }
+
+
+def get_now_playing_movies(page=1):
+    """TMDBの現在上映中の映画一覧を取得する"""
+    genre_map = get_genre_map()
+
+    url = f'{TMDB_BASE_URL}/movie/now_playing'
+    params = {
+        'api_key': TMDB_API_KEY,
+        'language': 'ja-JP',
+        'page': page,
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+
+    results = []
+    for movie in data.get('results', []):
+        genre_ids = movie.get('genre_ids', [])
+        genre_names = [genre_map.get(gid, '') for gid in genre_ids]
+        genre_names = [name for name in genre_names if name]
+
+        results.append({
+            'tmdb_id': movie.get('id'),
+            'title': movie.get('title'),
+            'overview': movie.get('overview'),
+            'release_date': movie.get('release_date'),
+            'poster_path': movie.get('poster_path'),
+            'poster_url': f"{TMDB_IMAGE_BASE_URL}{movie.get('poster_path')}" if movie.get('poster_path') else '',
+            'genre': ' / '.join(genre_names) if genre_names else '未設定',
+        })
+    return results, data.get('total_pages', 1)
