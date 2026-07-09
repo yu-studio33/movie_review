@@ -56,7 +56,9 @@
             {% if has_next %}
                 <div class="load-more-wrap">
                     <button id="load-more-btn" data-next-page="{{ page|add:'1' }}" data-query="{{ query }}">
-                        もっと見る
+                        View More
+                        <span class="load-more-line"></span>
+                        <span class="load-more-dot"></span>
                     </button>
                 </div>
             {% endif %}

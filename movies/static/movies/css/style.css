@@ -30,9 +30,9 @@ header {
 header h1 a {
     color: #ffffff;
     text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
     letter-spacing: 4px;
     text-transform: uppercase;
 }
@@ -277,7 +277,7 @@ main.main-wide {
 }
 
 /* ==========================================================================
-   もっと見るボタン
+   View More(もっと見るボタン)
    ========================================================================== */
 .load-more-wrap {
     text-align: center;
@@ -285,7 +285,57 @@ main.main-wide {
 }
 
 #load-more-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0;
+}
+
+.load-more-line {
+    width: 40px;
+    height: 1px;
+    background-color: #666;
+    margin-left: 16px;
+}
+
+.load-more-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #FF7FD4;
+    margin-left: -1px;
+    flex-shrink: 0;
+}
+
+#load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#load-more-btn:hover {
+    transform: translateY(-3px);
+    opacity: 0.85;
 }
 
 /* ==========================================================================
