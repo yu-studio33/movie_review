@@ -7,7 +7,7 @@ TMDB (The Movie Database) APIと連携した、Django製の映画レビューサ
 人気映画や検索結果をリアルタイムに表示し、ユーザーは映画に対して星評価付きレビューを投稿できます。
 AI感情分析と協調フィルタリングを活用し、一人ひとりの好みに合わせたおすすめ映画を表示する機能を実装しました。
 
-バックエンドからAI機能まで一貫して実装し、ユーザー体験を意識したアプリケーションを目指しました。
+バックエンドからAI機能まで一貫して開発し、使いやすさを意識して実装しました。
 
 ---
 
@@ -47,12 +47,19 @@ source movie_review_env/bin/activate
 
 pip install django python-dotenv Pillow requests janome scikit-learn joblib dill
 
+# .envファイルを作成し、SECRET_KEYとTMDB_API_KEYを設定
+echo "SECRET_KEY=your-secret-key-here" > .env
+echo "DEBUG=True" >> .env
+echo "TMDB_API_KEY=your-tmdb-api-key-here" >> .env
+
 python manage.py migrate
 python manage.py createsuperuser
+
+# (任意) デモ用のテストユーザー・レビューを投入
+python manage.py seed_reviews
+
 python manage.py runserver
 ```
-
-`.env` に `SECRET_KEY` と `TMDB_API_KEY` を設定してください。
 
 TMDB APIキーは、TMDB公式サイトで無料で取得できます。
 
