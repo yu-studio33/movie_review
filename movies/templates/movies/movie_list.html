@@ -1,17 +1,18 @@
 {% extends 'movies/base.html' %}
 
-{% block title %}{{ heading }}{% endblock %}
+{% block title %}{% if query %}{{ heading }} | Movie Review{% else %}Movie Review{% endif %}{% endblock %}
+
 {% block main_class %}main-wide{% endblock %}
 
 {% block content %}
     <div class="wide-content">
         <div class="hero-section">
-            <h1 class="hero-catch">何百万本もの映画から、次の一本を見つけよう。</h1>
+            <h1 class="hero-catch">何百万本もの映画から、<br class="mobile-break">次の一本を見つけよう。</h1>
             <form method="get" class="search-form">
                 <input type="text" name="query" placeholder="映画タイトルを検索" value="{{ query }}">
                 <button type="submit">検索</button>
                 {% if query %}
-                    <a href="{% url 'movie_list' %}" class="reset-link">人気映画に戻る</a>
+                    <a href="{% url 'movie_list' %}" class="reset-link">トップページに戻る</a>
                 {% endif %}
             </form>
         </div>

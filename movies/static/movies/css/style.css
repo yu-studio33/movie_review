@@ -15,6 +15,10 @@ body {
     letter-spacing: 0.02em;
 }
 
+.mobile-break {
+    display: none;
+}
+
 /* ==========================================================================
    ヘッダー
    ========================================================================== */
@@ -96,7 +100,7 @@ footer {
 main {
     max-width: 800px;
     margin: 0 auto;
-    padding: 56px 24px;
+    padding: 24px;
 }
 
 main > p {
@@ -138,7 +142,7 @@ h3 {
    ========================================================================== */
 .hero-section {
     text-align: center;
-    padding: 40px 20px 48px;
+    padding: 24px 20px 32px;
 }
 
 .hero-catch {
@@ -146,7 +150,7 @@ h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     line-height: 1.5;
 }
 
@@ -211,6 +215,11 @@ h3 {
 
 main.main-wide {
     max-width: 1200px;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    color: #999;
 }
 
 /* ==========================================================================
@@ -592,3 +601,95 @@ button:hover, form button:hover {
     padding-top: 40px;
     border-top: 1px solid #333;
 }
+
+/* ==========================================================================
+   レスポンシブ対応
+   ========================================================================== */
+@media (max-width: 600px) {
+    /* 1. ヘッダーを縦並びにして左右の衝突を防ぐ */
+    header {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    }
+
+    header h1 a {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .mobile-break {
+        display: inline;
+    }
+
+    /* 2. ログイン名とログアウトフォームの配置 */
+    nav {
+        font-size: 14px;
+        gap: 16px;
+        justify-content: center;
+    }
+
+    nav form button {
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* 3. ヒーローセクションと検索フォーム */
+    .hero-section {
+        padding: 8px 8px 24px;
+    }
+
+    .hero-catch {
+        font-size: 18px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .search-form input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .search-form button {
+        width: 100%;
+    }
+
+    /* 4. 映画グリッドを「横3列」に変更 */
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 0 12px;
+    }
+
+    .movie-title {
+        font-size: 11px;
+        margin-top: 6px;
+    }
+
+    /* 5. 見出しの調整 */
+    h2 {
+        font-size: 18px;
+        padding: 0 12px;
+        margin-bottom: 16px;
+    }
+}
+    /* 6. 映画詳細ページの「レビュー並び替えタブ」(新着順・評価が高い順・評価が低い順) */
+        .review-sort-tabs {
+        width: 100%;
+    }
+
+    .review-sort-tabs a {
+        font-size: 12px;
+        padding: 6px 10px;
+        white-space: nowrap;
+        flex: 1;
+        text-align: center;
+    }

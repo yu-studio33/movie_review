@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}映画レビューサイト{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'movies/css/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,16 +14,11 @@
 <header>
     <h1><a href="{% url 'movie_list' %}">MOVIE REVIEW</a></h1>
     <nav>
-        {% if user.is_authenticated %}
-            <a href="{% url 'my_page' %}" class="username">{{ user.username }}さん</a>
-            <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit">ログアウト</button>
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}">ログイン</a>
-            <a href="{% url 'signup' %}">新規登録</a>
-        {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'my_page' %}" class="username">Hello, {{ user.username }}さん</a>    {% else %}
+        <a href="{% url 'login' %}">ログイン</a>
+        <a href="{% url 'signup' %}">新規登録</a>
+    {% endif %}
     </nav>
 </header>
 
