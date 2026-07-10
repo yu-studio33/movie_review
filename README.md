@@ -1,4 +1,5 @@
 # Movie Review Site
+![Movie Review Top Page](images/top_page.png)
 Django製の映画レビューサイトです。TMDB(The Movie Database)と連携し、最新の人気映画や検索結果をリアルタイムに表示。ユーザー登録・ログイン後、映画に対して星評価付きのレビューを投稿できます。
 
 ## 主な機能
