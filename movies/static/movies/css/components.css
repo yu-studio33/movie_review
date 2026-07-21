@@ -1,331 +1,9 @@
 /* ==========================================================================
-   ベース設定
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #0d0d0d;
-    color: #ffffff;
-    font-family: 'Noto Sans JP', sans-serif;
-    line-height: 1.8;
-    letter-spacing: 0.02em;
-}
-
-.mobile-break {
-    display: none;
-}
-
-/* ==========================================================================
-   ヘッダー
-   ========================================================================== */
-header {
-    background-color: #000000;
-    padding: 20px 40px;
-    border-bottom: 1px solid #1a1a1a;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-}
-
-.logo-link {
-    text-decoration: none;
-    flex-shrink: 0;
-}
-
-.logo-link h1 {
-    color: #ffffff;
-    font-family: 'Archivo Narrow', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 0;
-}
-
-.logo-link:hover h1 {
-    color: #FF7FD4;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 13px;
-}
-
-nav a {
-    color: #ccc;
-    text-decoration: none;
-    letter-spacing: 1px;
-}
-
-nav a:hover {
-    color: #FF7FD4;
-}
-
-nav a.username {
-    color: #FF7FD4;
-    font-weight: 600;
-    font-size: 16px;
-}
-
-nav form button {
-    margin-top: 0;
-    padding: 8px 16px;
-    font-size: 11px;
-    background-color: transparent;
-    border: 1px solid #333;
-    color: #ccc;
-}
-
-nav form button:hover {
-    background-color: #FF7FD4;
-    border-color: #FF7FD4;
-    color: #000;
-}
-
-.header-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.header-search-form {
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-}
-
-.header-search-form input {
-    flex: 1;
-    height: 40px;
-    background-color: #141414;
-    border: 1px solid #333;
-    border-right: none;
-    border-radius: 999px 0 0 999px;
-    padding: 0 18px;
-    color: #fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-}
-
-.header-search-form input:focus {
-    outline: none;
-    border-color: #FF7FD4;
-}
-
-.header-search-btn {
-    width: 48px;
-    height: 40px;
-    background-color: #1f1f1f;
-    border: 1px solid #333;
-    border-left: none;
-    border-radius: 0 999px 999px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-top: 0;
-    padding: 0;
-}
-
-.header-search-btn svg {
-    stroke: #ccc;
-}
-
-.header-search-btn:hover {
-    background-color: #2a2a2a;
-}
-
-.hamburger-btn {
-    display: none;
-    background: none;
-    border: none;
-    padding: 0;
-    margin-top: 0;
-    cursor: pointer;
-}
-
-.sidebar-overlay {
-    display: none;
-}
-
-.header-spacer {
-    display: none;
-}
-
-.sidebar-close-btn {
-    display: none;
-}
-
-.sidebar-search-form,
-.sidebar-user {
-    display: none;
-}
-
-/* ==========================================================================
-   サイドメニュー
-   ========================================================================== */
-.app-layout {
-    display: flex;
-    align-items: flex-start;
-}
-
-.sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    padding: 32px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-}
-
-.sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    background: none;
-    border: none;
-    color: #ccc;
-    text-decoration: none;
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-    padding: 10px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 0;
-}
-
-.sidebar-link:hover {
-    background-color: #1a1a1a;
-    color: #FF7FD4;
-}
-
-.sidebar-link:hover .icon {
-    stroke: #FF7FD4;
-}
-
-.sidebar-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    stroke-width: 1.8;
-}
-
-.sidebar-toggle {
-    justify-content: flex-start;
-}
-
-.sidebar-caret {
-    margin-left: auto;
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
-.sidebar-toggle.open .sidebar-caret {
-    transform: rotate(180deg);
-}
-
-.sidebar-submenu {
-    flex-direction: column;
-    padding-left: 34px;
-}
-
-.sidebar-submenu:not([hidden]) {
-    display: flex;
-}
-
-.sidebar-submenu a {
-    color: #999;
-    text-decoration: none;
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
-    padding: 8px 12px;
-}
-
-.sidebar-submenu a:hover {
-    color: #FF7FD4;
-}
-
-main {
-    flex: 1;
-    min-width: 0;
-}
-
-/* ==========================================================================
-   フッター
-   ========================================================================== */
-footer {
-    text-align: center;
-    padding: 36px;
-    color: #555;
-    font-size: 12px;
-    letter-spacing: 1px;
-    border-top: 1px solid #1a1a1a;
-}
-
-/* ==========================================================================
-   メインコンテンツ / 見出し
-   ========================================================================== */
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 24px;
-}
-
-main > p {
-    margin-bottom: 20px;
-}
-
-main a {
-    color: #999;
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-main a:hover {
-    color: #FF7FD4;
-}
-
-h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-}
-
-h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: #FF7FD4;
-    margin: 40px 0 16px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-/* ==========================================================================
    トップページ ヒーローセクション（キャッチコピー＋検索）
    ========================================================================== */
 .hero-section {
     text-align: center;
-    padding: 24px 20px 32px;
+    padding: 0 20px;
 }
 
 .hero-catch {
@@ -333,7 +11,7 @@ h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 32px;
+    margin-bottom: 64px;
     line-height: 1.5;
 }
 
@@ -369,7 +47,7 @@ h3 {
 .wide-content {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px 0 24px;
+    padding: 48px 40px 48px 24px;
 }
 
 .movie-card {
@@ -402,7 +80,6 @@ h3 {
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
-    /* 2行まで表示し、はみ出したら... で省略 */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -419,10 +96,11 @@ main.main-wide {
     color: #999;
 }
 
-/* 固定グリッド表示(お気に入り・ジャンル別・年代別・人気の映画などの専用ページ) */
 .movie-grid--static {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 24px;
+    row-gap: 48px;
     overflow-x: visible;
 }
 
@@ -472,7 +150,6 @@ main.main-wide {
     line-height: 1;
 }
 
-/* アイコン共通(星・ハート両方) */
 .icon {
     display: block;
     fill: none;
@@ -483,13 +160,10 @@ main.main-wide {
     transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
-/* 評価済みの星は塗りつぶし */
 .icon-star.is-filled {
     fill: #FF7FD4;
     stroke: #FF7FD4;
 }
-
-/* ハートボタン */
 
 button.favorite-btn:hover .icon-heart {
     stroke: #FF7FD4;
@@ -511,7 +185,6 @@ button.favorite-btn.favorite-bounce {
     100% { transform: scale(1); }
 }
 
-/* 詳細ページ: タイトルとハートを横並びに */
 .detail-title-row {
     display: flex;
     align-items: center;
@@ -548,6 +221,7 @@ button.favorite-btn:hover {
     background-color: transparent;
 }
 
+
 /* ==========================================================================
    平均評価表示（詳細ページ）
    ========================================================================== */
@@ -558,6 +232,7 @@ button.favorite-btn:hover {
     font-weight: 600;
     margin-top: 8px;
 }
+
 
 /* ==========================================================================
    検索フォーム
@@ -611,6 +286,7 @@ button.favorite-btn:hover {
     color: #FF7FD4;
 }
 
+
 /* ==========================================================================
    View More(もっと見るボタン)
    ========================================================================== */
@@ -633,6 +309,7 @@ button.favorite-btn:hover {
     cursor: pointer;
     padding: 0;
     margin-top: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .load-more-line {
@@ -651,27 +328,11 @@ button.favorite-btn:hover {
     flex-shrink: 0;
 }
 
-#load-more-btn {
-    display: inline-flex;
-    align-items: center;
-    background: none;
-    border: none;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: none;
-    cursor: pointer;
-    padding: 0;
-    margin-top: 0;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
 #load-more-btn:hover {
     transform: translateY(-3px);
     opacity: 0.85;
 }
+
 
 /* ==========================================================================
    ページネーション(前へ/次へ)
@@ -721,6 +382,7 @@ button.favorite-btn:hover {
     font-weight: 700;
 }
 
+
 /* ==========================================================================
    映画詳細ページ
    ========================================================================== */
@@ -740,6 +402,7 @@ button.favorite-btn:hover {
 .detail-meta + .detail-meta {
     margin-bottom: 24px;
 }
+
 
 /* ==========================================================================
    レビュー
@@ -776,7 +439,6 @@ button.favorite-btn:hover {
     color: #ff5cc4;
 }
 
-/* レビューの並び順切り替え */
 .review-sort-tabs {
     display: inline-flex;
     gap: 4px;
@@ -803,6 +465,7 @@ button.favorite-btn:hover {
     background-color: #FF7FD4;
     font-weight: bold;
 }
+
 
 /* ==========================================================================
    星評価
@@ -837,103 +500,6 @@ button.favorite-btn:hover {
     color: #FF7FD4;
 }
 
-/* ==========================================================================
-   フォーム共通スタイル
-   ========================================================================== */
-form p {
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #999;
-    margin-bottom: 8px;
-}
-
-form input,
-form textarea,
-form select {
-    width: 100%;
-    max-width: 500px;
-    background-color: #141414;
-    border: 1px solid #333;
-    border-radius: 4px;
-    padding: 12px 16px;
-    color: #fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-}
-
-form input:focus,
-form textarea:focus,
-form select:focus {
-    outline: none;
-    border-color: #FF7FD4;
-}
-
-form ul.errorlist {
-    list-style: none;
-    color: #ff5c8a;
-    font-size: 12px;
-    margin-top: 6px;
-}
-
-form .helptext,
-form ul {
-    display: block;
-    color: #666;
-    font-size: 12px;
-    margin-top: 6px;
-    line-height: 1.5;
-    list-style: none;
-}
-
-form + p {
-    margin-top: 20px;
-}
-
-/* ==========================================================================
-   共通の四角ボタン(更新する、キャンセル、ログアウトなど)
-   ========================================================================== */
-button, form button,
-.btn-square {
-    display: block;
-    background-color: #FF7FD4;
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    padding: 9px 20px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: 8px;
-}
-
-button:hover, form button:hover,
-.btn-square:hover {
-    background-color: #ff5cc4;
-}
-
-/* セカンダリ(輪郭のみ)バリエーション: キャンセル、ログアウトなど */
-.btn-square--secondary {
-    background-color: transparent;
-    border: 1px solid #444;
-    color: #ccc;
-}
-
-.btn-square--secondary:hover {
-    background-color: transparent;
-    border-color: #FF7FD4;
-    color: #FF7FD4;
-}
 
 /* ==========================================================================
    成功メッセージ
@@ -951,6 +517,7 @@ button:hover, form button:hover,
     border-radius: 4px;
     font-size: 14px;
 }
+
 
 /* ==========================================================================
    おすすめカルーセル
@@ -995,6 +562,7 @@ button:hover, form button:hover,
     margin-top: 8px;
 }
 
+
 /* ==========================================================================
    横スクロールカルーセルの矢印
    ========================================================================== */
@@ -1038,11 +606,6 @@ button:hover, form button:hover,
     right: 4px;
 }
 
-@media (max-width: 600px) {
-    .carousel-arrow {
-        display: none;
-    }
-}
 
 /* ==========================================================================
    セクションの区切り(上に余白+区切り線)
@@ -1052,6 +615,7 @@ button:hover, form button:hover,
     padding-top: 40px;
     border-top: 1px solid #333;
 }
+
 
 /* ==========================================================================
    マイページ
@@ -1096,6 +660,7 @@ button:hover, form button:hover,
     font-size: 13px;
     margin-bottom: 20px;
 }
+
 
 /* ==========================================================================
    レビューの編集・削除
@@ -1191,7 +756,6 @@ button:hover, form button:hover,
     margin-top: 0;
 }
 
-/* cancel-edit-btn は .btn-square--secondary と同じ見た目(輪郭のみ) */
 .cancel-edit-btn {
     background-color: transparent;
     border: 1px solid #444;
@@ -1207,6 +771,7 @@ button:hover, form button:hover,
 .inline-edit-form .star-rating label {
     font-size: 24px;
 }
+
 
 /* ==========================================================================
    年代ページ・プルダウン
@@ -1228,261 +793,9 @@ button:hover, form button:hover,
     border-color: #FF7FD4;
 }
 
-/* ==========================================================================
-   レスポンシブ対応
-   ========================================================================== */
-@media (max-width: 600px) {
-    /* 1. ヘッダーを整える */
-    header {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 16px;
-    }
-
-    .hamburger-btn {
-        display: block;
-    }
-
-    .header-spacer {
-        display: block;
-        width: 24px;
-    }
-
-    .logo-link {
-        text-align: center;
-    }
-
-    .logo-link h1 {
-        font-size: 16px;
-        letter-spacing: 1px;
-    }
-
-    .header-center {
-        display: none;
-    }
-
-    nav {
-        display: none;
-    }
-
-.wide-content {
-        padding: 0 12px;
-    }
-
-    .sidebar-search-form {
-        display: flex;
-        margin: 56px 16px 20px;
-    }
-
-    .sidebar-search-form input {
-        flex: 1;
-        height: 38px;
-        background-color: #0d0d0d;
-        border: 1px solid #333;
-        border-right: none;
-        border-radius: 999px 0 0 999px;
-        padding: 0 14px;
-        color: #fff;
-        font-size: 13px;
-    }
-
-    .sidebar-search-form button {
-        width: 42px;
-        height: 38px;
-        background-color: #1f1f1f;
-        border: 1px solid #333;
-        border-left: none;
-        border-radius: 0 999px 999px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 0;
-        padding: 0;
-    }
-
-    .sidebar-user {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin: 0 16px 24px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #2a2a2a;
-    }
-
-    .sidebar-user a {
-        color: #FF7FD4;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .mobile-break {
-        display: inline;
-    }
-
-    /* 2. ログイン名とログアウトフォームの配置 */
-    nav {
-        font-size: 14px;
-        gap: 16px;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    nav a.username {
-        font-size: 13px;
-    }
-
-    nav form button {
-        padding: 10px 16px;
-        font-size: 13px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    /* 2.5 サイドメニュー:スライド式に変更 */
-    .app-layout {
-        position: relative;
-    }
-
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 82%;
-        max-width: 320px;
-        height: 100vh;
-        background-color: #1e1e1e;
-        border-right: 1px solid #333;
-        z-index: 100;
-        transform: translateX(-100%);
-        transition: transform 0.25s ease;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .sidebar-overlay {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
-        z-index: 90;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
-    }
-
-    .sidebar-overlay.open {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    /* 3. ヒーローセクションと検索フォーム */
-    .hero-section {
-        padding: 8px 8px 24px;
-    }
-
-    .search-form {
-        flex-direction: column;
-        width: 100%;
-        padding: 0 12px;
-        gap: 8px;
-    }
-
-    .search-form input {
-        width: 100%;
-        max-width: none;
-    }
-
-    .search-form button {
-        width: 100%;
-    }
-
-    .sidebar-close-btn {
-        display: block;
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: none;
-        border: none;
-        padding: 4px;
-        margin-top: 0;
-        cursor: pointer;
-    }
-
-    .sidebar-close-btn:hover,
-    .sidebar-close-btn:focus,
-    .sidebar-close-btn:active {
-        background: none;
-        background-color: transparent;
-    }
-
-    .hero-catch {
-        font-size: 20px;
-        line-height: 1.5;
-        text-align: center;
-    }
-
-    /* 4. 映画グリッドを「横3列」に変更 */
-    .movie-grid {
-        gap: 12px;
-        padding: 4px 4px 16px;
-    }
-
-    .movie-card {
-        flex: 0 0 110px;
-    }
-
-    .movie-title {
-        font-size: 14px;
-        line-height: 1.4;
-        margin-top: 8px;
-    }
-
-    .movie-rating {
-        font-size: 14px;
-    }
-
-    .icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .movie-meta {
-        margin-top: 8px;
-        gap: 8px;
-    }
-
-    /* 固定グリッド表示(お気に入り・ジャンル別・年代別・人気の映画などの専用ページ) */
-    .movie-grid--static {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-
-    /* 5. 見出しの調整 */
-    h2 {
-        font-size: 16px;
-        padding: 0 12px;
-        margin-bottom: 20px;
-    }
-
-    /* 6. 映画詳細ページの「レビュー並び替えタブ」(新着順・評価が高い順・評価が低い順) */
-    .review-sort-tabs {
-        width: 100%;
-    }
-
-    .review-sort-tabs a {
-        font-size: 12px;
-        padding: 6px 10px;
-        white-space: nowrap;
-        flex: 1;
-        text-align: center;
-    }
+/* 検索結果ページの「トップページに戻る」リンク */
+.reset-link {
+    display: inline-block;
+    margin-top: -20px;
+    margin-bottom: 24px;
 }

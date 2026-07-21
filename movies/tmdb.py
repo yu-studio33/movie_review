@@ -147,3 +147,52 @@ def get_now_playing_movies(page=1):
             'genre': ' / '.join(genre_names) if genre_names else '未設定',
         })
     return results, data.get('total_pages', 1)
+
+
+def discover_movies(genre_id=None, year_from=None, year_to=None, page=1):
+    """ジャンルや公開年で絞り込んで映画を探す"""
+    genre_map = get_genre_map()
+
+    url = f'{TMDB_BASE_URL}/discover/movie'
+    params = {
+        'api_key': TMDB_API_KEY,
+        'language': 'ja-JP',
+        'page': page,
+        'sort_by': 'popularity.desc',
+    }
+    if genre_id:
+        params['with_genres'] = genre_id
+    if year_from:
+        params['primary_release_date.gte'] = f'{year_from}-01-01'
+    if year_to:
+        params['primary_release_date.lte'] = f'{year_to}-12-31'
+
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+
+    results = []
+    for movie in data.get('results', []):
+        genre_ids = movie.get('genre_ids', [])
+        genre_names = [genre_map.get(gid, '') for gid in genre_ids]
+        genre_names = [name for name in genre_names if name]
+
+        results.append({
+            'tmdb_id': movie.get('id'),
+            'title': movie.get('title'),
+            'overview': movie.get('overview'),
+            'release_date': movie.get('release_date'),
+            'poster_path': movie.get('poster_path'),
+            'poster_url': f"{TMDB_IMAGE_BASE_URL}{movie.get('poster_path')}" if movie.get('poster_path') else '',
+            'genre': ' / '.join(genre_names) if genre_names else '未設定',
+        })
+    return results, data.get('total_pages', 1)
+
+
+def get_genre_id_by_name(genre_name):
+    """日本語のジャンル名から、TMDBのジャンルIDを逆引きする"""
+    genre_map = get_genre_map()
+    for genre_id, name in genre_map.items():
+        if name == genre_name:
+            return genre_id
+    return None

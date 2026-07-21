@@ -1,0 +1,270 @@
+/* ==========================================================================
+   レスポンシブ対応
+   ========================================================================== */
+@media (max-width: 600px) {
+    header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+
+    .header-spacer {
+        display: block;
+        width: 24px;
+    }
+
+    .logo-link {
+        text-align: center;
+    }
+
+    .logo-link h1 {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .header-center {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .wide-content {
+        padding: 0 12px;
+    }
+
+    .sidebar-search-form {
+        display: flex;
+        margin: 56px 16px 20px;
+        background-color: #fff;
+        border: 1px solid #333;
+        border-radius: 999px;
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+    }
+
+    .sidebar-search-form:focus-within {
+        border-color: #FF7FD4;
+    }
+
+    .sidebar-search-form input {
+        flex: 1;
+        height: 38px;
+        background-color: transparent;
+        border: none;
+        padding: 0 14px;
+        color: #0d0d0d;
+        font-size: 13px;
+    }
+
+    .sidebar-search-form input::placeholder {
+        color: #999;
+    }
+
+    .sidebar-search-form input:focus {
+        outline: none;
+    }
+
+    .sidebar-search-form button {
+        width: 42px;
+        height: 38px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .sidebar-search-form button:hover {
+        background-color: #ffe6f4;
+    }
+
+    .sidebar-user {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0 16px 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .sidebar-user a {
+        color: #FF7FD4;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .mobile-break {
+        display: inline;
+    }
+
+    nav {
+        font-size: 14px;
+        gap: 16px;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    nav a.username {
+        font-size: 13px;
+    }
+
+    nav form button {
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .app-layout {
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 82%;
+        max-width: 320px;
+        height: 100vh;
+        background-color: #1e1e1e;
+        border-right: 1px solid #333;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 90;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .sidebar-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .hero-section {
+        padding: 0 8px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .search-form input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .search-form button {
+        width: 100%;
+    }
+
+    .sidebar-close-btn {
+        display: block;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        padding: 4px;
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+    .sidebar-close-btn:hover,
+    .sidebar-close-btn:focus,
+    .sidebar-close-btn:active {
+        background: none;
+        background-color: transparent;
+    }
+
+    .hero-catch {
+        font-size: 20px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .movie-grid {
+        gap: 12px;
+        padding: 4px 4px 16px;
+    }
+
+    .movie-card {
+        flex: 0 0 110px;
+    }
+
+    .movie-title {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-top: 8px;
+    }
+
+    .movie-rating {
+        font-size: 14px;
+    }
+
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .movie-meta {
+        margin-top: 8px;
+        gap: 8px;
+    }
+
+    .movie-grid--static {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    h2 {
+        font-size: 16px;
+        padding: 0 12px;
+        margin-bottom: 20px;
+    }
+
+    .review-sort-tabs {
+        width: 100%;
+    }
+
+    .review-sort-tabs a {
+        font-size: 12px;
+        padding: 6px 10px;
+        white-space: nowrap;
+        flex: 1;
+        text-align: center;
+    }
+
+    .carousel-arrow {
+        display: none;
+    }
+}

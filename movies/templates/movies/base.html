@@ -5,38 +5,313 @@
     <meta charset="UTF-8">
     <title>{% block title %}映画レビューサイト{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'movies/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'movies/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'movies/css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'movies/css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'movies/css/responsive.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+JP:wght@400;500&family=Archivo+Narrow:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+JP:wght@400;500&family=Archivo+Narrow:wght@700;800&display=swap"
+          rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body>
 <header>
-    <h1><a href="{% url 'movie_list' %}">MOVIE REVIEW</a></h1>
+    <button type="button" class="hamburger-btn" id="hamburger-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff"
+             stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+
+    <a href="{% url 'movie_list' %}" class="logo-link"><h1>MOVIE REVIEW</h1></a>
+
+    <div class="header-center">
+        <form method="get" action="{% url 'movie_list' %}" class="header-search-form">
+            <input type="text" name="query" placeholder="映画タイトルを検索" value="{{ request.GET.query }}">
+            <button type="submit" class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     stroke="#000" stroke-width="2" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+
     <nav>
-    {% if user.is_authenticated %}
-        <a href="{% url 'my_page' %}" class="username">Hello, {{ user.username }}さん</a>    {% else %}
+        {% if user.is_authenticated %}
+        <a href="{% url 'my_page' %}" class="username">Hello, {{ user.username }}さん</a>
+        {% else %}
         <a href="{% url 'login' %}">ログイン</a>
         <a href="{% url 'signup' %}">新規登録</a>
-    {% endif %}
+        {% endif %}
     </nav>
+
+    <div class="header-spacer"></div>
 </header>
 
-<main class="{% block main_class %}{% endblock %}">
-    {% if messages %}
+<div class="app-layout">
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <button type="button" class="sidebar-close-btn" id="sidebar-close-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff"
+                 stroke-width="2" stroke-linecap="round">
+                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="6" y1="18" x2="18" y2="6"/>
+            </svg>
+        </button>
+
+        <form method="get" action="{% url 'movie_list' %}" class="sidebar-search-form">
+            <input type="text" name="query" placeholder="検索" value="{{ request.GET.query }}">
+            <button type="submit">
+                <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     stroke="#000" stroke-width="2" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
+        </form>
+
+        <div class="sidebar-user">
+            {% if user.is_authenticated %}
+            <a href="{% url 'my_page' %}" class="username">Hello, {{ user.username }}さん</a>
+            {% else %}
+            <a href="{% url 'login' %}">ログイン</a>
+            <a href="{% url 'signup' %}">新規登録</a>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'movie_list' %}" class="sidebar-link">
+            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 11l9-8 9 8"/>
+                <path d="M5 10v10h14V10"/>
+            </svg>
+            <span>ホーム</span>
+        </a>
+        <a href="{% url 'favorite_list' %}" class="sidebar-link">
+            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>お気に入り</span>
+        </a>
+        <a href="{% url 'popular_movies' %}" class="sidebar-link">
+            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <polygon
+                        points="12 2 15.09 8.63 22 9.24 16.5 14.14 18.18 21 12 17.27 5.82 21 7.5 14.14 2 9.24 8.91 8.63 12 2"/>
+            </svg>
+            <span>人気の映画</span>
+        </a>
+        <a href="{% url 'now_playing_page' %}" class="sidebar-link">
+            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+            </svg>
+            <span>新着映画</span>
+        </a>
+
+        <div class="sidebar-group">
+            <button type="button" class="sidebar-link sidebar-toggle" data-target="genre-submenu">
+                <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="7" width="18" height="13" rx="1"/>
+                    <path d="M3 7l2-4h14l2 4"/>
+                </svg>
+                <span>ジャンル</span>
+                <svg class="sidebar-caret" width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+            <div class="sidebar-submenu" id="genre-submenu" hidden>
+                <a href="{% url 'genre_movies' 'アクション' %}">アクション</a>
+                <a href="{% url 'genre_movies' 'コメディ' %}">コメディ</a>
+                <a href="{% url 'genre_movies' 'ホラー' %}">ホラー</a>
+                <a href="{% url 'genre_movies' 'ファンタジー' %}">ファンタジー</a>
+                <a href="{% url 'genre_movies' 'アニメーション' %}">アニメーション</a>
+            </div>
+        </div>
+
+        <div class="sidebar-group">
+            <button type="button" class="sidebar-link sidebar-toggle" data-target="era-submenu">
+                <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="5" width="18" height="16" rx="1"/>
+                    <path d="M3 10h18"/>
+                    <path d="M8 3v4"/>
+                    <path d="M16 3v4"/>
+                </svg>
+                <span>年代別</span>
+                <svg class="sidebar-caret" width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+            <div class="sidebar-submenu" id="era-submenu" hidden>
+                <a href="{% url 'era_movies' 2020 2029 %}">2020年代</a>
+                <a href="{% url 'era_movies' 2010 2019 %}">2010年代</a>
+                <a href="{% url 'era_movies' 2000 2009 %}">2000年代</a>
+                <a href="{% url 'era_movies' 1990 1999 %}">1990年代</a>
+                <a href="{% url 'era_movies' 1980 1989 %}">1980年代</a>
+                <a href="{% url 'era_movies' 1900 1979 %}">それ以前</a>
+            </div>
+        </div>
+
+
+    </aside>
+
+    <main class="{% block main_class %}{% endblock %}">
+        {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
+            <li class="{{ message.tags }}">{{ message }}</li>
             {% endfor %}
         </ul>
-    {% endif %}
+        {% endif %}
 
-    {% block content %}
-    {% endblock %}
-</main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
 
-    <footer>
-        <p>&copy; 2026 Movie Review Site</p>
-    </footer>
+<footer>
+    <small>&copy; 2026 Movie Review Site</small>
+</footer>
+
+<script>
+    function getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]').content;
+    }
+
+    function toggleFavorite(event, button) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const tmdbId = button.dataset.tmdbId;
+
+        fetch(`/movies/favorite/${tmdbId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+            .then(response => {
+                if (response.status === 403) {
+                    window.location.href = '/login/';
+                    return null;
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data) return;
+
+                if (data.is_favorited) {
+                    button.classList.add('is-favorited');
+                } else {
+                    button.classList.remove('is-favorited');
+
+                    const card = button.closest('#panel-favorites .movie-card');
+                    if (card) {
+                        card.style.transition = 'opacity 0.3s ease';
+                        card.style.opacity = '0';
+                        setTimeout(() => card.remove(), 300);
+                    }
+                }
+
+                button.classList.remove('favorite-bounce');
+                void button.offsetWidth;
+                button.classList.add('favorite-bounce');
+            });
+
+        return false;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const reviewList = document.querySelector('.review-list');
+        if (reviewList) {
+            reviewList.addEventListener('click', function (e) {
+                const editLink = e.target.closest('.edit-review-link');
+                const cancelBtn = e.target.closest('.cancel-edit-btn');
+
+                if (editLink) {
+                    e.preventDefault();
+                    const li = editLink.closest('li');
+                    const container = li.querySelector('.review-edit-container');
+                    const reviewId = editLink.dataset.reviewId;
+
+                    if (container.innerHTML !== '') {
+                        container.innerHTML = '';
+                        return;
+                    }
+
+                    fetch(`/movies/review/${reviewId}/edit/`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    })
+                        .then(response => response.text())
+                        .then(html => {
+                            container.innerHTML = html;
+                        });
+                }
+
+                if (cancelBtn) {
+                    const li = cancelBtn.closest('li');
+                    li.querySelector('.review-edit-container').innerHTML = '';
+                }
+            });
+        }
+
+        // サイドメニューのサブメニュー開閉
+        document.querySelectorAll('.sidebar-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const submenu = document.getElementById(btn.dataset.target);
+                submenu.hidden = !submenu.hidden;
+                btn.classList.toggle('open');
+            });
+        });
+
+        // ハンバーガーメニューの開閉
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+        if (hamburgerBtn && sidebar && sidebarOverlay) {
+            hamburgerBtn.addEventListener('click', function () {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('open');
+            });
+
+            sidebarOverlay.addEventListener('click', function () {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+            });
+
+            if (sidebarCloseBtn) {
+                sidebarCloseBtn.addEventListener('click', function () {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('open');
+                });
+            }
+        }
+
+        // 横スクロールカルーセルの矢印
+        document.querySelectorAll('.carousel-arrow').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const grid = btn.parentElement.querySelector('.movie-grid');
+                const direction = parseInt(btn.dataset.direction);
+                grid.scrollBy({ left: direction * 400, behavior: 'smooth' });
+            });
+        });
+    });
+</script>
 </body>
 </html>

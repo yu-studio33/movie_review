@@ -1,0 +1,50 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ year_from }}年代 | Movie Review{% endblock %}
+
+{% block main_class %}main-wide{% endblock %}
+
+{% block content %}
+<div class="wide-content">
+    <h2>{{ decade_label }}</h2>
+
+    {% if year_options %}
+    <select class="year-filter" onchange="if (this.value) location.href = this.value;">
+        <option value="{% url 'era_movies' decade_start decade_end %}">すべて表示</option>
+        {% for y in year_options %}
+        <option value="{% url 'era_movies' y y %}" {% if year_from == y and year_to == y %}selected{% endif %}>
+            {{ y }}年
+        </option>
+        {% endfor %}
+    </select>
+    {% endif %}
+
+    <div class="movie-grid movie-grid--static" id="movie-list">
+        {% include 'movies/movie_list_items.html' %}
+    </div>
+
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="?page={{ page|add:'-1' }}" class="pagination-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </a>
+        {% endif %}
+
+        <span class="pagination-current">{{ page }}</span>
+
+        {% if has_next %}
+        <a href="?page={{ page|add:'1' }}" class="pagination-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+

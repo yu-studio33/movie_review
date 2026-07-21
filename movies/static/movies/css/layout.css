@@ -1,0 +1,294 @@
+/* ==========================================================================
+   ヘッダー
+   ========================================================================== */
+header {
+    background-color: #000000;
+    padding: 20px 40px;
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.logo-link {
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.logo-link h1 {
+    color: #ffffff;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.logo-link:hover h1 {
+    color: #FF7FD4;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    color: #FF7FD4;
+}
+
+nav a.username {
+    color: #FF7FD4;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+nav form button {
+    margin-top: 0;
+    padding: 8px 16px;
+    font-size: 11px;
+    background-color: transparent;
+    border: 1px solid #333;
+    color: #ccc;
+}
+
+nav form button:hover {
+    background-color: #FF7FD4;
+    border-color: #FF7FD4;
+    color: #000;
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header-search-form {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #333;
+    border-radius: 999px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+.header-search-form:focus-within {
+    border-color: #FF7FD4;
+}
+
+.header-search-form input {
+    flex: 1;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    padding: 0 18px;
+    color: #0d0d0d;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+}
+
+.header-search-form input::placeholder {
+    color: #999;
+}
+
+.header-search-form input:focus {
+    outline: none;
+}
+
+.header-search-btn {
+    width: 48px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 0;
+    padding: 0;
+}
+
+.header-search-btn svg {
+    stroke: #0d0d0d;
+}
+
+.header-search-btn:hover {
+    background-color: #ffe6f4;
+}
+
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 0;
+    cursor: pointer;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+.header-spacer {
+    display: none;
+}
+
+.sidebar-close-btn {
+    display: none;
+}
+
+.sidebar-search-form,
+.sidebar-user {
+    display: none;
+}
+
+
+/* ==========================================================================
+   サイドメニュー
+   ========================================================================== */
+.app-layout {
+    display: flex;
+    align-items: flex-start;
+}
+
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ccc;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.sidebar-link:hover {
+    background-color: #1a1a1a;
+    color: #FF7FD4;
+}
+
+.sidebar-link:hover .icon {
+    stroke: #FF7FD4;
+}
+
+.sidebar-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    stroke-width: 1.8;
+}
+
+.sidebar-toggle {
+    justify-content: flex-start;
+}
+
+.sidebar-caret {
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-toggle.open .sidebar-caret {
+    transform: rotate(180deg);
+}
+
+.sidebar-submenu {
+    flex-direction: column;
+    padding-left: 34px;
+}
+
+.sidebar-submenu:not([hidden]) {
+    display: flex;
+}
+
+.sidebar-submenu a {
+    color: #999;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    padding: 8px 12px;
+}
+
+.sidebar-submenu a:hover {
+    color: #FF7FD4;
+}
+
+main {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 36px;
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-top: 1px solid #1a1a1a;
+}
+
+
+/* ==========================================================================
+   メインコンテンツ(構造)
+   ========================================================================== */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+main > p {
+    margin-bottom: 20px;
+}
+
+main a {
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+main a:hover {
+    color: #FF7FD4;
+}

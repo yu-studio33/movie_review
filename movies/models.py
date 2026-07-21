@@ -25,3 +25,15 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.movie.title} ({self.rating})"
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='favorited_by')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'movie')  # 同じ映画を同じユーザーが2回お気に入りできないようにする
+
+    def __str__(self):
+        return f"{self.user.username} favorites {self.movie.title}"

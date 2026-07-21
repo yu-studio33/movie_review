@@ -1,0 +1,19 @@
+<form method="post" action="{% url 'edit_review' review.id %}" class="inline-edit-form">
+    {% csrf_token %}
+
+    <label>評価</label>
+    <div class="star-rating">
+        {% for radio in form.rating %}
+            {{ radio.tag }}
+            <label for="{{ radio.id_for_label }}">★</label>
+        {% endfor %}
+    </div>
+
+    <label for="{{ form.comment.id_for_label }}">コメントを編集</label>
+    {{ form.comment }}
+
+    <div class="form-buttons">
+        <button type="submit">更新する</button>
+        <button type="button" class="cancel-edit-btn">キャンセル</button>
+    </div>
+</form>
