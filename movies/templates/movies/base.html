@@ -213,6 +213,7 @@
                 }
                 return response.json();
             })
+
             .then(data => {
                 if (!data) return;
 
@@ -221,11 +222,14 @@
                 } else {
                     button.classList.remove('is-favorited');
 
-                    const card = button.closest('#panel-favorites .movie-card');
-                    if (card) {
-                        card.style.transition = 'opacity 0.3s ease';
-                        card.style.opacity = '0';
-                        setTimeout(() => card.remove(), 300);
+                    const isFavoritesPage = document.getElementById('panel-favorites') || window.location.pathname === '/movies/favorites/';
+                    if (isFavoritesPage) {
+                        const card = button.closest('.movie-card');
+                        if (card) {
+                            card.style.transition = 'opacity 0.3s ease';
+                            card.style.opacity = '0';
+                            setTimeout(() => card.remove(), 300);
+                        }
                     }
                 }
 
