@@ -69,9 +69,14 @@ TMDB APIキーは、TMDB公式サイトで無料で取得できます。
 
 ---
 
-## 作者
+## 出典・謝辞
 
-Yu
+本プロジェクトは以下のAPI・OSSを利用しています。
+
+- 映画情報・画像：[The Movie Database (TMDB)](https://www.themoviedb.org/)
+  TMDBが提供するAPIを通じて映画データを取得しています。本プロダクトはTMDB APIを使用していますが、TMDBによって承認・認定されたものではありません。
+- 形態素解析：[Janome](https://mocobeta.github.io/janome/)
+- 機械学習：[scikit-learn](https://scikit-learn.org/)
 
 GitHub
 https://github.com/yu-studio33
