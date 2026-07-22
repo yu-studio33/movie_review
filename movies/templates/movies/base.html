@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}映画レビューサイト{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'movies/images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'movies/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'movies/css/layout.css' %}">
     <link rel="stylesheet" href="{% static 'movies/css/components.css' %}">
@@ -99,6 +100,15 @@
             </svg>
             <span>お気に入り</span>
         </a>
+
+    <a href="{% url 'now_playing_page' %}" class="sidebar-link">
+            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+            </svg>
+            <span>新着映画</span>
+        </a>
         <a href="{% url 'popular_movies' %}" class="sidebar-link">
             <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
@@ -106,14 +116,6 @@
                         points="12 2 15.09 8.63 22 9.24 16.5 14.14 18.18 21 12 17.27 5.82 21 7.5 14.14 2 9.24 8.91 8.63 12 2"/>
             </svg>
             <span>人気の映画</span>
-        </a>
-        <a href="{% url 'now_playing_page' %}" class="sidebar-link">
-            <svg class="icon sidebar-icon" width="18" height="18" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="M12 7v5l3 3"/>
-            </svg>
-            <span>新着映画</span>
         </a>
 
         <div class="sidebar-group">

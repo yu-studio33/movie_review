@@ -53,7 +53,7 @@ def movie_detail(request, tmdb_id):
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
 
     is_favorited = request.user.is_authenticated and movie.favorited_by.filter(user=request.user).exists()
-    
+
     # 並び替えのAjaxリクエスト時は、レビュー部分だけ返す
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'movies/movie_review_items.html', {
@@ -149,6 +149,7 @@ def movie_list(request):
 
     # --- 協調フィルタリングによるおすすめ(ログイン時のみ、検索していない時のみ) ---
     recommended_movies = None
+    recommend_heading = 'あなたへのおすすめ'
     if request.user.is_authenticated and not query:
         my_positive_movie_ids = Review.objects.filter(
             user=request.user, sentiment='positive'
@@ -172,6 +173,22 @@ def movie_list(request):
             avg_rating=Avg('reviews__rating')
         ).order_by('-recommend_score')[:10]
 
+        # レビュー実績が少なく、協調フィルタリングの結果が空の場合は人気映画で代替
+        if not recommended_movies:
+            fallback_movies, _ = get_popular_movies(page=1)
+            fallback_movies = fallback_movies[:10]
+
+            fallback_tmdb_ids = [m['tmdb_id'] for m in fallback_movies]
+            fallback_local = Movie.objects.filter(tmdb_id__in=fallback_tmdb_ids).annotate(
+                avg_rating=Avg('reviews__rating')
+            )
+            fallback_rating_map = {m.tmdb_id: m.avg_rating for m in fallback_local}
+            for m in fallback_movies:
+                m['avg_rating'] = fallback_rating_map.get(m['tmdb_id'])
+
+            recommended_movies = fallback_movies
+            recommend_heading = '今期注目の映画'
+
     # --- 新着映画(検索していない時のみ、1ページ目のみ表示) ---
     now_playing_movies = None
     if not query:
@@ -193,6 +210,7 @@ def movie_list(request):
         'page': page,
         'has_next': has_next,
         'recommended_movies': recommended_movies,
+        'recommend_heading': recommend_heading,
         'now_playing_movies': now_playing_movies,
         'favorite_ids': favorite_ids,
     })
