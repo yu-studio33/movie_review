@@ -466,6 +466,19 @@ button.favorite-btn:hover {
     font-weight: bold;
 }
 
+/* 未ログイン時の「ログインするとレビューを投稿できます」の案内文。
+   main a のグローバル指定(13px)を上書きして周囲の文字とサイズを揃える */
+.inline-link {
+    font-size: inherit;
+    letter-spacing: normal;
+    text-transform: none;
+    color: #FF7FD4;
+    text-decoration: underline;
+}
+
+.inline-link:hover {
+    color: #ff5fc4;
+}
 
 /* ==========================================================================
    星評価
@@ -733,9 +746,8 @@ button.favorite-btn:hover {
 .inline-edit-form textarea {
     margin: 0;
     background-color: #141414;
-    border: none;
-    border-bottom: 1px solid #333;
-    border-radius: 0;
+    border: 1px solid #333;
+    border-radius: 4px;
     min-height: 200px;
     max-width: none;
     font-size: 16px;
@@ -743,7 +755,7 @@ button.favorite-btn:hover {
 }
 
 .inline-edit-form textarea:focus {
-    border-bottom-color: #FF7FD4;
+    border-color: #FF7FD4;
 }
 
 .inline-edit-form .form-buttons {

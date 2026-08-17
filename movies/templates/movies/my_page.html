@@ -47,7 +47,7 @@
                 <polyline points="15 18 9 12 15 6"/>
             </svg>
         </button>
-        <div class="movie-grid">
+        <div class="movie-grid movie-grid--static">
             {% for movie in favorite_movies %}
             <div class="movie-card">
                 <a href="{% url 'movie_detail' movie.tmdb_id %}" class="movie-card-link">

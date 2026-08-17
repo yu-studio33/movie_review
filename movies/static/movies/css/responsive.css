@@ -211,6 +211,7 @@
         font-size: 20px;
         line-height: 1.5;
         text-align: center;
+        margin-bottom: 32px;
     }
 
     .movie-grid {
@@ -219,7 +220,7 @@
     }
 
     .movie-card {
-        flex: 0 0 110px;
+        flex: 0 0 126px;
     }
 
     .movie-title {
@@ -246,6 +247,11 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
+    .movie-grid--static .movie-card {
+    flex: none;
+    width: 100%;
+    }
+
     h2 {
         font-size: 16px;
         padding: 0 12px;
@@ -266,5 +272,23 @@
 
     .carousel-arrow {
         display: none;
+    }
+
+    /* マイページのタブ(レビュー/お気に入り/アカウント設定)
+       PC用paddingのままだと「レビュー」が折り返すので、スマホ用に余白と文字サイズを縮小 */
+
+
+    .mypage-tabs {
+    margin-bottom: 0px;
+    }
+
+    .mypage-tab {
+        padding: 9px 12px;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .review-list li {
+        padding: 14px 16px;
     }
 }
