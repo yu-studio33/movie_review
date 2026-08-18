@@ -17,7 +17,7 @@ body {
 }
 
 .mobile-break {
-    display: none;
+    display: none;  /* スマホでは responsive.css で display:inline に上書き */
 }
 
 

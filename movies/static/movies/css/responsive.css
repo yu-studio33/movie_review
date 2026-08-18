@@ -2,6 +2,10 @@
    レスポンシブ対応
    ========================================================================== */
 @media (max-width: 600px) {
+
+    /* ==========================================================================
+       ヘッダー
+       ========================================================================== */
     header {
         display: grid;
         grid-template-columns: auto 1fr auto;
@@ -40,6 +44,75 @@
         padding: 0 12px;
     }
 
+
+    /* ==========================================================================
+       サイドバー(ハンバーガーメニュー)
+       ========================================================================== */
+    .app-layout {
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 82%;
+        max-width: 320px;
+        height: 100vh;
+        background-color: #1e1e1e;
+        border-right: 1px solid #333;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 90;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .sidebar-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .sidebar-close-btn {
+        display: block;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        padding: 4px;
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+    .sidebar-close-btn:hover,
+    .sidebar-close-btn:focus,
+    .sidebar-close-btn:active {
+        background: none;
+        background-color: transparent;
+    }
+
+
+    /* ==========================================================================
+       サイドバー内 検索フォーム
+       ========================================================================== */
     .sidebar-search-form {
         display: flex;
         margin: 56px 16px 20px;
@@ -88,6 +161,10 @@
         background-color: #ffe6f4;
     }
 
+
+    /* ==========================================================================
+       サイドバー内 ユーザー情報・ナビ
+       ========================================================================== */
     .sidebar-user {
         display: flex;
         flex-direction: column;
@@ -126,50 +203,19 @@
         cursor: pointer;
     }
 
-    .app-layout {
-        position: relative;
-    }
 
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 82%;
-        max-width: 320px;
-        height: 100vh;
-        background-color: #1e1e1e;
-        border-right: 1px solid #333;
-        z-index: 100;
-        transform: translateX(-100%);
-        transition: transform 0.25s ease;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .sidebar-overlay {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
-        z-index: 90;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
-    }
-
-    .sidebar-overlay.open {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
+    /* ==========================================================================
+       ヒーローセクション・検索フォーム
+       ========================================================================== */
     .hero-section {
         padding: 0 8px;
+    }
+
+    .hero-catch {
+        font-size: 20px;
+        line-height: 1.5;
+        text-align: center;
+        margin-bottom: 32px;
     }
 
     .search-form {
@@ -188,32 +234,10 @@
         width: 100%;
     }
 
-    .sidebar-close-btn {
-        display: block;
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: none;
-        border: none;
-        padding: 4px;
-        margin-top: 0;
-        cursor: pointer;
-    }
 
-    .sidebar-close-btn:hover,
-    .sidebar-close-btn:focus,
-    .sidebar-close-btn:active {
-        background: none;
-        background-color: transparent;
-    }
-
-    .hero-catch {
-        font-size: 20px;
-        line-height: 1.5;
-        text-align: center;
-        margin-bottom: 32px;
-    }
-
+    /* ==========================================================================
+       映画カード・グリッド(横スクロールカルーセル)
+       ========================================================================== */
     .movie-grid {
         gap: 12px;
         padding: 4px 4px 16px;
@@ -243,15 +267,27 @@
         gap: 8px;
     }
 
+    .carousel-arrow {
+        display: none;
+    }
+
+
+    /* ==========================================================================
+       静的グリッド(ジャンル別・年代別・お気に入りページ)
+       ========================================================================== */
     .movie-grid--static {
         grid-template-columns: repeat(3, 1fr);
     }
 
     .movie-grid--static .movie-card {
-    flex: none;
-    width: 100%;
+        flex: none;
+        width: 100%;
     }
 
+
+    /* ==========================================================================
+       見出し・レビュー並び替えタブ
+       ========================================================================== */
     h2 {
         font-size: 16px;
         padding: 0 12px;
@@ -270,16 +306,13 @@
         text-align: center;
     }
 
-    .carousel-arrow {
-        display: none;
-    }
 
-    /* マイページのタブ(レビュー/お気に入り/アカウント設定)
-       PC用paddingのままだと「レビュー」が折り返すので、スマホ用に余白と文字サイズを縮小 */
-
-
+    /* ==========================================================================
+       マイページのタブ(レビュー/お気に入り/アカウント設定)
+       PC用paddingのままだと「レビュー」が折り返すので、スマホ用に余白と文字サイズを縮小
+       ========================================================================== */
     .mypage-tabs {
-    margin-bottom: 0px;
+        margin-bottom: 0px;
     }
 
     .mypage-tab {
@@ -288,6 +321,11 @@
         letter-spacing: 0.5px;
     }
 
+
+    /* ==========================================================================
+       レビューカード(投稿したレビュー・映画詳細ページ共通)
+       PC用paddingのままだと左右の余白が広すぎるのでスマホ用に縮小
+       ========================================================================== */
     .review-list li {
         padding: 14px 16px;
     }

@@ -75,18 +75,6 @@
     color: #FF7FD4;
 }
 
-.movie-title {
-    margin-top: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 main.main-wide {
     max-width: 1200px;
 }
@@ -274,16 +262,6 @@ button.favorite-btn:hover {
 .search-form button {
     margin-top: 0;
     padding: 0 28px;
-}
-
-.reset-link {
-    color: #999;
-    font-size: 13px;
-    text-decoration: none;
-}
-
-.reset-link:hover {
-    color: #FF7FD4;
 }
 
 
@@ -805,9 +783,19 @@ button.favorite-btn:hover {
     border-color: #FF7FD4;
 }
 
-/* 検索結果ページの「トップページに戻る」リンク */
+
+/* ==========================================================================
+   共通の戻るリンク(検索結果・年代ページなど)
+   ========================================================================== */
 .reset-link {
     display: inline-block;
+    color: #999;
+    font-size: 13px;
+    text-decoration: none;
     margin-top: -20px;
     margin-bottom: 24px;
+}
+
+.reset-link:hover {
+    color: #FF7FD4;
 }

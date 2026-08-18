@@ -249,24 +249,6 @@ nav form button:hover {
     color: #FF7FD4;
 }
 
-main {
-    flex: 1;
-    min-width: 0;
-}
-
-
-/* ==========================================================================
-   フッター
-   ========================================================================== */
-footer {
-    text-align: center;
-    padding: 36px;
-    color: #555;
-    font-size: 12px;
-    letter-spacing: 1px;
-    border-top: 1px solid #1a1a1a;
-}
-
 
 /* ==========================================================================
    メインコンテンツ(構造)
@@ -275,6 +257,8 @@ main {
     max-width: 800px;
     margin: 0 auto;
     padding: 24px;
+    flex: 1;
+    min-width: 0;
 }
 
 main > p {
@@ -291,4 +275,17 @@ main a {
 
 main a:hover {
     color: #FF7FD4;
+}
+
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 36px;
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-top: 1px solid #1a1a1a;
 }
