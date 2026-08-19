@@ -41,7 +41,7 @@
     }
 
     .wide-content {
-        padding: 0 12px;
+        padding: 0 8px;
     }
 
 
@@ -277,6 +277,9 @@
        ========================================================================== */
     .movie-grid--static {
         grid-template-columns: repeat(3, 1fr);
+        column-gap: 6px;
+        row-gap: 40px;
+        margin: 0 -20px;
     }
 
     .movie-grid--static .movie-card {
